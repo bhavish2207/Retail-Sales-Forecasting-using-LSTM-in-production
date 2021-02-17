@@ -16,9 +16,9 @@ import numpy as np
 from sklearn.preprocessing import MinMaxScaler
 import statistics
 
-model = pickle.load(open('D:/SYR ADS/Retail Sales Forecasting on Production/app/model.pkl', 'rb'))
-train_df = pd.read_pickle('D:/SYR ADS/Retail Sales Forecasting on Production/app/train_data.pkl')
-train_df_y = pd.read_pickle('D:/SYR ADS/Retail Sales Forecasting on Production/app/train_data_y.pkl')
+model = pickle.load(open('D:/SYR ADS/Retail Sales Forecasting on Production/Retail-Sales-Forecasting-using-LSTM-in-production/app/model.pkl', 'rb'))
+train_df = pd.read_pickle('D:/SYR ADS/Retail Sales Forecasting on Production/Retail-Sales-Forecasting-using-LSTM-in-production/app/train_data.pkl')
+train_df_y = pd.read_pickle('D:/SYR ADS/Retail Sales Forecasting on Production/Retail-Sales-Forecasting-using-LSTM-in-production/app/train_data_y.pkl')
 
 @app.route('/')
 def index():
