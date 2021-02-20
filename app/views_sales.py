@@ -16,9 +16,11 @@ import numpy as np
 from sklearn.preprocessing import MinMaxScaler
 import statistics
 
-model = pickle.load(open('D:/SYR ADS/Retail Sales Forecasting on Production/Retail-Sales-Forecasting-using-LSTM-in-production/app/model.pkl', 'rb'))
-train_df = pd.read_pickle('D:/SYR ADS/Retail Sales Forecasting on Production/Retail-Sales-Forecasting-using-LSTM-in-production/app/train_data.pkl')
-train_df_y = pd.read_pickle('D:/SYR ADS/Retail Sales Forecasting on Production/Retail-Sales-Forecasting-using-LSTM-in-production/app/train_data_y.pkl')
+model = pickle.load(open('app/model.pkl', 'rb'))
+train_df = pickle.load(open('app/train_data.pkl', 'rb'))
+train_df_y = pickle.load(open('app/train_data_y.pkl', 'rb'))
+#train_df = pd.read_pickle('train_data.pkl')
+#train_df_y = pd.read_pickle('train_data_y.pkl')
 
 @app.route('/')
 def index():
@@ -61,3 +63,9 @@ def upload_file():
         args = True
         
     return render_template('public/index.html', args=args, prediction_text='Sales for the upcoming week is predicted to be ${}'.format(output))
+
+if __name__ == "__main__":
+    model = joblib.load('model.pkl')
+    train_df = pd.read_pickle('train_data.pkl')
+    train_df_y = pd.read_pickle('train_data_y.pkl')
+    app.run()
