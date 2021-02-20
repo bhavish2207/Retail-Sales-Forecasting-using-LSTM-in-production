@@ -11,18 +11,19 @@ import math
 import matplotlib.pyplot as plt
 import numpy as np
 from sklearn.preprocessing import MinMaxScaler
+#from sklearn.externals import joblib
 import statistics
 import pickle
 
 dept_store_lvl_df = pd.read_csv('sales_forecasting.csv')
-print(dept_store_lvl_df.head())
+#print(dept_store_lvl_df.head())
 
 ### Creating week_nbr column
 dept_store_lvl_df['Date'] = pd.to_datetime(dept_store_lvl_df.Date)
 dept_store_lvl_df['week_nbr'] = dept_store_lvl_df.sort_values(['Date'],ascending=[True]).groupby(['Store', 'Dept'])\
              .cumcount() + 1
-print(dept_store_lvl_df.head())
-print(dept_store_lvl_df.shape)
+#print(dept_store_lvl_df.head())
+#print(dept_store_lvl_df.shape)
 
 ### Creating a periodic week_nbr column to capture week of the year value between 1 & 52. 
 ### This column can capture the seasonality by holding the week of the year value
@@ -62,8 +63,16 @@ store_test_x = dept_store_lvl_df.iloc[295867:,].drop(columns=['Date','Store','De
 store_test_y = dept_store_lvl_df.iloc[295867:,]['Weekly_Sales'].to_frame()
 
 ### Saving as Pickle File
-store_train_x.to_pickle('train_data.pkl')
-store_train_y.to_pickle('train_data_y.pkl')
+#store_train_x.to_pickle('train_data.pkl')
+#joblib.dump(store_train_x, 'train_data.pkl')
+Pkl_Filename = "train_data.pkl"
+with open(Pkl_Filename, 'wb') as file:  
+    pickle.dump(store_train_x, file)
+#store_train_y.to_pickle('train_data_y.pkl')
+#joblib.dump(store_train_y, 'train_data_y.pkl')
+Pkl_Filename = "train_data_y.pkl"
+with open(Pkl_Filename, 'wb') as file:  
+    pickle.dump(store_train_y, file)
 
 #### Applying Scaler on entire Store Level Aggregated dataset
 scaler = MinMaxScaler()
@@ -172,6 +181,12 @@ for e in range(epochs):
         optimizer.zero_grad() ### Erasing the gradient values after every weight update
   
 ### LOADING to PICKLE FILE      
-pickle.dump(model_lstm, open('model.pkl','wb'))
-model = pickle.load(open('model.pkl','rb'))
+#joblib.dump(model_lstm, 'model.pkl')
+Pkl_Filename = "model.pkl"
+with open(Pkl_Filename, 'wb') as file:  
+    pickle.dump(model_lstm, file)
+
+        
+#pickle.dump(model_lstm, open('model.pkl','wb'))
+#model = pickle.load(open('model.pkl','rb'))
 print("All three PICKLE FILEs CREATED")
