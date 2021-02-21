@@ -5,3 +5,7 @@ numpy==1.18.1
 scikit-learn==0.22.1
 Flask==1.1.2
 gunicorn==20.0.4
+Itsdangerous==1.1.0
+Jinja2==2.10.1
+MarkupSafe==1.1.1
+Werkzeug==0.15.5
