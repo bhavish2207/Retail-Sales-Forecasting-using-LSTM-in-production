@@ -59,8 +59,8 @@ stores_dict3 = {}   ### Creating a dictionary containing the 45 stores
 
 store_train_x = dept_store_lvl_df.iloc[:295867,].drop(columns=['Date','Store','Dept','week_nbr'])
 store_train_y = dept_store_lvl_df.iloc[:295867,]['Weekly_Sales'].to_frame()
-store_test_x = dept_store_lvl_df.iloc[295867:,].drop(columns=['Date','Store','Dept','week_nbr'])
-store_test_y = dept_store_lvl_df.iloc[295867:,]['Weekly_Sales'].to_frame()
+#store_test_x = dept_store_lvl_df.iloc[295867:,].drop(columns=['Date','Store','Dept','week_nbr'])
+#store_test_y = dept_store_lvl_df.iloc[295867:,]['Weekly_Sales'].to_frame()
 
 ### Saving as Pickle File
 #store_train_x.to_pickle('train_data.pkl')
@@ -78,15 +78,15 @@ with open(Pkl_Filename, 'wb') as file:
 scaler = MinMaxScaler()
 scaler = scaler.fit(store_train_x)
 train_arr_x = scaler.transform(store_train_x)
-test_arr_x = scaler.transform(store_test_x)
+#test_arr_x = scaler.transform(store_test_x)
     
 scaler = scaler.fit(store_train_y)
 train_arr_y = scaler.transform(store_train_y)
-test_arr_y = scaler.transform(store_test_y)
+#test_arr_y = scaler.transform(store_test_y)
 
 #### Creating Sliding Windows for Store 1 Dept 1
 x_train, y_train = data_prep(train_arr_x[0:143],train_arr_y[0:143],10)
-x_test, y_test = data_prep(test_arr_x[0:143],test_arr_y[0:143],10)
+#x_test, y_test = data_prep(test_arr_x[0:143],test_arr_y[0:143],10)
 
 ### Creating Sliding windows for other stores 2 to 45 and concatenating them into a single numpy array
 for i in range(143,len(train_arr_x),143):   
@@ -95,10 +95,10 @@ for i in range(143,len(train_arr_x),143):
     x_train = np.concatenate((x_train, x_train_store), axis=0)
     y_train = np.concatenate((y_train, y_train_store), axis=0)
     
-for j in range(143,116907,143):  
-    x_test_store, y_test_store = data_prep(test_arr_x[j:j+143],test_arr_y[j:j+143],10)
-    x_test = np.concatenate((x_test, x_test_store), axis=0)
-    y_test = np.concatenate((y_test, y_test_store), axis=0)
+#for j in range(143,116907,143):  
+#    x_test_store, y_test_store = data_prep(test_arr_x[j:j+143],test_arr_y[j:j+143],10)
+#    x_test = np.concatenate((x_test, x_test_store), axis=0)
+#    y_test = np.concatenate((y_test, y_test_store), axis=0)
     
 ### Creating Train & Test Loader Objects
 train_target3 = torch.tensor(y_train.astype(np.float32))
@@ -107,10 +107,10 @@ train_tensor3 = torch.utils.data.TensorDataset(train3, train_target3)
 train_loader3 = torch.utils.data.DataLoader(dataset = train_tensor3, batch_size = 143, shuffle = False)
 train_loader_full = torch.utils.data.DataLoader(dataset = train_tensor3, batch_size = len(train3), shuffle = False)
 
-test_target3 = torch.tensor(y_test.astype(np.float32))
-test3 = torch.tensor(x_test.astype(np.float32)) 
-test_tensor3 = torch.utils.data.TensorDataset(test3, test_target3) 
-test_loader3 = torch.utils.data.DataLoader(dataset = test_tensor3, batch_size = len(test3),shuffle = False)
+#test_target3 = torch.tensor(y_test.astype(np.float32))
+#test3 = torch.tensor(x_test.astype(np.float32)) 
+#test_tensor3 = torch.utils.data.TensorDataset(test3, test_target3) 
+#test_loader3 = torch.utils.data.DataLoader(dataset = test_tensor3, batch_size = len(test3),shuffle = False)
 
  ### LSTM CLASS
 class LSTM_Model(nn.Module):
