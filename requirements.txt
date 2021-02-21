@@ -1,0 +1,7 @@
+pandas==0.25.3
+https://download.pytorch.org/whl/cpu/torch-1.1.0-cp36-cp36m-linux_x86_64.whl
+matplotlib==3.1.1
+numpy==1.18.1
+scikit-learn==0.22.1
+Flask==1.1.2
+gunicorn==20.0.4
